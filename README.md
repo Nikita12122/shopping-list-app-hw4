@@ -1,5 +1,4 @@
-This project contains both the frontend (React) and the backend (Node.js + Express + MongoDB) for Homework #4.
-The application implements CRUD operations for shopping lists and items, along with server call mocking, as required in the assignment.
+
 
 Project Structure
 /shopping-list-backend   → Backend (Node.js, Express, MongoDB)
