@@ -1,0 +1,64 @@
+:root {
+    --bg: #0b1220;
+    --panel: #111a2c;
+    --muted: #96a0b5;
+    --text: #e8eefc;
+    --brand: #6ea8ff;
+    --danger: #ff6b6b;
+    --warning: #ffc857;
+    --border: #1f2a44;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, Arial; background: var(--bg); color: var(--text); }
+.page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+.header { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; }
+.title { margin: 0; font-weight: 600; }
+.badge { background: #192540; color: var(--muted); padding: 4px 8px; border-radius: 999px; font-size: 12px; }
+
+.main { display: grid; grid-template-columns: 1fr 320px; gap: 16px; }
+@media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
+
+.members, .items, .sidebar .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.sidebar .card h3 { margin-top: 0; }
+
+.row { display: flex; gap: 8px; align-items: center; }
+.row.space { justify-content: space-between; }
+.muted { color: var(--muted); }
+
+.btn { background: var(--brand); color: #0b1220; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.btn:hover { filter: brightness(1.05); }
+.btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn.danger { background: var(--danger); color: white; }
+.btn.warning { background: var(--warning); color: #0b1220; }
+
+.input { background: #0d1730; color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; min-width: 260px; }
+
+.editable { display: flex; gap: 8px; align-items: center; }
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.chip { display: inline-flex; gap: 6px; align-items: center; background: #0d1730; border: 1px solid var(--border); padding: 6px 10px; border-radius: 999px; }
+.chip-btn { border: none; background: transparent; color: var(--muted); cursor: pointer; }
+
+.badge.small { font-size: 10px; padding: 2px 6px; background: #23345a; }
+
+.list { list-style: none; padding: 0; margin: 8px 0 0; }
+.list-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.strike { text-decoration: line-through; color: var(--muted); }
+button {
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+button {
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-2px) scale(1.03);
+    filter: brightness(1.15);
+}
+
+button:active {
+    transform: scale(0.97);
+    filter: brightness(0.9);
+}

@@ -1,0 +1,485 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: shopping-list-api
+meta:
+  id: wrk_642fab98756546c38928845acc0dbd5e
+  created: 1765224019796
+  modified: 1765224027447
+  description: ""
+collection:
+  - name: ShoppingList
+    meta:
+      id: fld_848529fef90643ffacbeabf8878945bc
+      created: 1765731953354
+      modified: 1765731974645
+      sortKey: -1765731953354
+      description: ""
+    children:
+      - url: http://localhost:3000/shoppingList/list
+        name: shoppingList/list
+        meta:
+          id: req_ad3d9392fde9487999587bb79993f021
+          created: 1765224019808
+          modified: 1765731970075
+          isPrivate: false
+          description: ""
+          sortKey: -1765731957262.625
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/shoppingList/get
+        name: shoppingList/get
+        meta:
+          id: req_7de0d77b746940c49711866d7d19e288
+          created: 1765224095337
+          modified: 1765731970721
+          isPrivate: false
+          description: ""
+          sortKey: -1765731957261.0625
+        method: GET
+        parameters:
+          - name: id
+            value: 69371b4513b25625f024bf77
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/shoppingList/create
+        name: shoppingList/create
+        meta:
+          id: req_015896d17cd4409d8bfd5dd98212380a
+          created: 1765224178701
+          modified: 1765731968823
+          isPrivate: false
+          description: ""
+          sortKey: -1765731957259.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "name": "List from Ungzariaaa"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+          - name: x-user-id
+            value: u1
+            description: ""
+            disabled: false
+          - name: x-profile
+            value: admin
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/shoppingList/update
+        name: shoppingList/update
+        meta:
+          id: req_3967454a59864ad59717626959ecd200
+          created: 1765224298518
+          modified: 1765731969469
+          isPrivate: false
+          description: ""
+          sortKey: -1765731957265.75
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "id": "69372f4f13b25625f024c16b",
+              "name": "Updated from Insomnia"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+          - name: x-user-id
+            value: u1
+            description: ""
+            disabled: false
+          - name: x-profile
+            value: admin
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/shoppingList/delete
+        name: shoppingList/delete
+        meta:
+          id: req_1eb408c23dcb4aa680a130447a4f916c
+          created: 1765224529321
+          modified: 1765731968259
+          isPrivate: false
+          description: ""
+          sortKey: -1765731957247
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "id": "6937171a6ecc8c2b9ac3b5d9"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+          - name: "x-user-id:"
+            value: u1
+            description: ""
+            disabled: false
+          - name: x-profile
+            value: admin
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/shoppingList/archive
+        name: shoppingList/archive
+        meta:
+          id: req_dcbad78cb1a54987b7b04d3d30523b92
+          created: 1765731194047
+          modified: 1765731957238
+          isPrivate: false
+          description: ""
+          sortKey: -1765731957222
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "id": "693eec3ad6179313d36be6ba",
+              "isArchived": true
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+          - name: x-user-id
+            value: u1
+            description: ""
+            disabled: false
+          - name: x-profile
+            value: admin
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/shoppingList/addMember
+        name: shoppingList/addMember
+        meta:
+          id: req_147d144c53e1458f8788a30c35e9b3b7
+          created: 1765731473727
+          modified: 1765731980996
+          isPrivate: false
+          description: ""
+          sortKey: -1765731957322
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "id": "693eec3ad6179313d36be6ba",
+              "userId": "Nichitaaa"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+          - name: x-user-id
+            value: u1
+            description: ""
+            disabled: false
+          - name: x-profile
+            value: admin
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/shoppingList/removeMember
+        name: shoppingList/removeMember
+        meta:
+          id: req_3439d9147cc646e19aac1f8f586b3f97
+          created: 1765731909073
+          modified: 1765732000002
+          isPrivate: false
+          description: ""
+          sortKey: -1765731957272
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "id": "693eec3ad6179313d36be6ba",
+              "userId": "Nichitaaa"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+          - name: x-user-id
+            value: u1
+            description: ""
+            disabled: false
+          - name: x-profile
+            value: admin
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Items
+    meta:
+      id: fld_e44fb63d77aa44409ecced65bd0d9ec9
+      created: 1765732017011
+      modified: 1765732051294
+      sortKey: -1765732017011
+      description: ""
+    children:
+      - url: http://localhost:3000/item/create
+        name: item/create
+        meta:
+          id: req_41ee72d6894042a78226e96d3a422a87
+          created: 1765732045745
+          modified: 1765732487917
+          isPrivate: false
+          description: ""
+          sortKey: -1765732049245
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "shoppingListId": "693eec3ad6179313d36be6ba",
+              "text": "Milka"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+          - name: x-user-id
+            value: u1
+            description: ""
+            disabled: false
+          - name: x-profile
+            value: admin
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/item/list?shoppingListId=693eec3ad6179313d36be6ba
+        name: item/list
+        meta:
+          id: req_ef03a26efdfe44c2a5f400a38ecb2217
+          created: 1765732112801
+          modified: 1765732149584
+          isPrivate: false
+          description: ""
+          sortKey: -1765732003283.5
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+          - name: x-user-id
+            value: u1
+            description: ""
+            disabled: false
+          - name: x-profile
+            value: admin
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/item/update
+        name: item/update
+        meta:
+          id: req_8e00d18d4a764d749989c35d4570aae7
+          created: 1765732173382
+          modified: 1765732399631
+          isPrivate: false
+          description: ""
+          sortKey: -1765732026264.25
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            
+            {
+              "id": "693eeefcd6179313d36be6f3",
+            	 "text": "Milk 2%",
+              "isResolved": false
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+          - name: x-user-id
+            value: u1
+            description: ""
+            disabled: false
+          - name: x-profile
+            value: admin
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/item/delete
+        name: item/delete
+        meta:
+          id: req_f995db1b5721417588dc0409af39a1c0
+          created: 1765732454123
+          modified: 1765732497116
+          isPrivate: false
+          description: ""
+          sortKey: -1765732014773.875
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            
+            {
+              "id": "693ef088ff91fdb46a8d200f"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+          - name: x-user-id
+            value: u1
+            description: ""
+            disabled: false
+          - name: x-profile
+            value: admin
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_9c97b3309af3e615ba95c60bf61b885983c8cd57
+    created: 1765224019803
+    modified: 1765224019803
+environments:
+  name: Base Environment
+  meta:
+    id: env_9c97b3309af3e615ba95c60bf61b885983c8cd57
+    created: 1765224019802
+    modified: 1765224019802
+    isPrivate: false
