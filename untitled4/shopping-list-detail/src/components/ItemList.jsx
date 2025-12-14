@@ -7,15 +7,19 @@ export default function ItemList({ items, canEdit, onToggleResolved, onDeleteIte
     }
     return (
         <ul className="list">
-            {items.map((item) => (
-                <ItemRow
-                    key={item.id}
-                    item={item}
-                    canEdit={canEdit}
-                    onToggleResolved={(resolved) => onToggleResolved(item.id, resolved)}
-                    onDelete={() => onDeleteItem(item.id)}
-                />
-            ))}
+            {items.map((item) => {
+                const itemId = item.id || item._id;
+                return (
+                    <ItemRow
+                        key={itemId}
+                        item={{ ...item, id: itemId }}
+                        canEdit={canEdit}
+                        onToggleResolved={(resolved) => onToggleResolved(itemId, resolved)}
+                        onDelete={() => onDeleteItem(itemId)}
+                    />
+                );
+            })}
+
         </ul>
     );
 }

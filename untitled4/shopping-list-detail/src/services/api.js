@@ -78,14 +78,11 @@ export async function deleteShoppingList(id) {
 
 export async function getItems(shoppingListId) {
     if (USE_MOCK) {
-        return {
-            data: MOCK_ITEMS.filter(i => i.shoppingListId === shoppingListId)
-        };
+        return { data: MOCK_ITEMS.filter(i => i.shoppingListId === shoppingListId) };
     }
 
-    return safeFetch(
-        `${API_URL}/item/list?shoppingListId=${shoppingListId}`
-    );
+    const res = await safeFetch(`${API_URL}/item/list?shoppingListId=${shoppingListId}`);
+    return { ...res, data: res.data.map(normalizeItem) };
 }
 
 export async function createItem(shoppingListId, text) {
@@ -126,7 +123,7 @@ export async function updateItem(id, updates) {
         return { data: item };
     }
 
-    return safeFetch(`${API_URL}/item/update`, {
+    const res = await safeFetch(`${API_URL}/item/update`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -135,4 +132,12 @@ export async function updateItem(id, updates) {
         },
         body: JSON.stringify({ id, ...updates })
     });
+
+    return { ...res, data: normalizeItem(res.data) };
+}
+
+
+function normalizeItem(i) {
+    if (!i) return i;
+    return { ...i, id: i.id || i._id };
 }
