@@ -8,10 +8,20 @@ import {
     getShoppingLists
 } from "../services/api";
 
+import {
+    PieChart,
+    Pie,
+    Cell,
+    Legend,
+    ResponsiveContainer
+} from "recharts";
+import { useTranslation } from "react-i18next";
 
 const CURRENT_USER_ID = "u1";
 
 export default function ShoppingListDetailPage() {
+    const { t } = useTranslation();
+
     const { id } = useParams();
 
     const navigate = useNavigate();
@@ -28,6 +38,10 @@ export default function ShoppingListDetailPage() {
     const [renameValue, setRenameValue] = useState("");
 
     const [confirmAction, setConfirmAction] = useState(null);
+
+
+
+
 
     const ConfirmPopup = ({ open, onCancel, onConfirm }) => {
         if (!open) return null;
@@ -75,7 +89,7 @@ export default function ShoppingListDetailPage() {
                             borderRadius: "4px",
                             cursor: "pointer"
                         }}>
-                            Delete
+                            {t("delete")}
                         </button>
                     </div>
                 </div>
@@ -128,7 +142,7 @@ export default function ShoppingListDetailPage() {
                     onClick={() => navigate("/")}
                     style={{ background: "#2563eb", color: "white", padding: "0.5rem 1rem" }}
                 >
-                    ← Back
+                    ← {t("back")}
                 </button>
             </div>
         );
@@ -141,6 +155,23 @@ export default function ShoppingListDetailPage() {
             </div>
         );
     }
+    if (!list) {
+        return (
+            <div style={{ padding: "2rem" }}>
+                <p>Loading...</p>
+            </div>
+        );
+    }
+
+    const resolvedCount = list.items.filter(i => i.isResolved).length;
+    const unresolvedCount = list.items.length - resolvedCount;
+
+    const pieData = [
+        { name: t("resolved"), value: resolvedCount },
+        { name: t("unresolved"), value: unresolvedCount }
+    ];
+
+    const PIE_COLORS = ["#22c55e", "#ef4444"];
 
     const isOwner = list.ownerId === CURRENT_USER_ID;
     const isMember = list.members.some((m) => m.id === CURRENT_USER_ID);
@@ -337,18 +368,19 @@ export default function ShoppingListDetailPage() {
     });
 
     return (
-        <div style={{ padding: "2rem", color: "white" }}>
+        <div style={{padding: "2rem"}}>
+
             <button
                 onClick={() => navigate("/")}
-                style={{ background: "#475569", color: "white", padding: "0.4rem 0.8rem" }}
+                style={{background: "#475569", color: "white", padding: "0.4rem 0.8rem"}}
             >
-                ← Back
+                ← {t("back")}
             </button>
 
             <h1>{list.name} </h1>
             {/* Rename */}
             {isOwner && (
-                <div style={{ margin: "1.5rem 0" }}>
+                <div style={{margin: "1.5rem 0"}}>
                     {!isRenaming && (
                         <button
                             onClick={() => {
@@ -361,12 +393,12 @@ export default function ShoppingListDetailPage() {
                                 color: "white"
                             }}
                         >
-                            ✍ Rename List
+                            {t("renameList")}
                         </button>
                     )}
 
                     {isRenaming && (
-                        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                        <div style={{display: "flex", gap: "10px", alignItems: "center"}}>
                             <input
                                 value={renameValue}
                                 onChange={(e) => setRenameValue(e.target.value)}
@@ -380,7 +412,7 @@ export default function ShoppingListDetailPage() {
                             <button
                                 onClick={() => {
                                     if (renameValue.trim()) {
-                                        updateList({ ...list, name: renameValue.trim() });
+                                        updateList({...list, name: renameValue.trim()});
                                     }
                                     setIsRenaming(false);
                                 }}
@@ -408,13 +440,13 @@ export default function ShoppingListDetailPage() {
                 </div>
             )}
             <p>
-                <strong>Owner:</strong>{" "}
-                {isOwner ? "You" : list.members.find((m) => m.id === list.ownerId)?.name || "Friend"}
+                <strong>{t("ownerLabel")}:</strong>{" "}
+                {isOwner ? t("youLabel") : list.members.find((m) => m.id === list.ownerId)?.name || "Friend"}
             </p>
 
             {/* Members */}
-            <h3>Members</h3>
-            <ul style={{ listStyle: "none", padding: 0 }}>
+            <h3>{t("members")}</h3>
+            <ul style={{listStyle: "none", padding: 0}}>
                 {list.members.map((m) => (
                     <li
                         key={m.id}
@@ -427,14 +459,14 @@ export default function ShoppingListDetailPage() {
                     >
                         <span>
                             {m.name}
-                            {m.id === CURRENT_USER_ID && " (you)"}
-                            {m.id === list.ownerId && " (owner)"}
+                            {m.id === CURRENT_USER_ID && ` (${t("youLabel")})`}
+                            {m.id === list.ownerId && ` (${t("ownerLabel")})`}
                         </span>
 
                         {isOwner && m.id !== list.ownerId && (
                             <button
                                 onClick={() =>
-                                    setConfirmAction({ type: "member", targetId: m.id })
+                                    setConfirmAction({type: "member", targetId: m.id})
                                 }
                                 style={{
                                     background: "#e55555",
@@ -442,7 +474,7 @@ export default function ShoppingListDetailPage() {
                                     color: "white"
                                 }}
                             >
-                                Remove
+                                {t("remove")}
                             </button>
                         )}
                     </li>
@@ -450,7 +482,7 @@ export default function ShoppingListDetailPage() {
             </ul>
 
             {isOwner && (
-                <div style={{ marginBottom: "1rem" }}>
+                <div style={{marginBottom: "1rem"}}>
                     <input
                         value={newMemberName}
                         onChange={(e) => setNewMemberName(e.target.value)}
@@ -464,9 +496,10 @@ export default function ShoppingListDetailPage() {
                     />
                     <button
                         onClick={addMember}
-                        style={{ background: "#2563eb", color: "white", padding: "0.4rem 0.8rem" }}
+                        style={{background: "#2563eb", color: "white", padding: "0.4rem 0.8rem"}}
                     >
-                        Add
+                       {t("add")}
+
                     </button>
                 </div>
             )}
@@ -480,16 +513,37 @@ export default function ShoppingListDetailPage() {
                         marginBottom: "1rem"
                     }}
                 >
-                    Leave list
+                    {t("leaveList")}
                 </button>
             )}
 
+            <h2>{t("statistics")}</h2>
+
+            <div style={{width: "100%", height: 260, marginBottom: "1.5rem"}}>
+                <ResponsiveContainer>
+                    <PieChart>
+                        <Pie
+                            data={pieData}
+                            dataKey="value"
+                            nameKey="name"
+                            outerRadius={90}
+                            label
+                        >
+                            {pieData.map((_, index) => (
+                                <Cell key={index} fill={PIE_COLORS[index]}/>
+                            ))}
+                        </Pie>
+                        <Legend/>
+                    </PieChart>
+                </ResponsiveContainer>
+            </div>
 
 
             {/* ITEMS */}
-            <h2>Items</h2>
+            <h2>{t("items")}</h2>
 
-            <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+
+            <div style={{display: "flex", gap: "0.5rem", marginBottom: "1rem"}}>
                 <button
                     onClick={() => setFilter("all")}
                     style={{
@@ -498,7 +552,7 @@ export default function ShoppingListDetailPage() {
                         color: "white"
                     }}
                 >
-                    All
+                    {t("all")}
                 </button>
 
                 <button
@@ -509,7 +563,7 @@ export default function ShoppingListDetailPage() {
                         color: "white"
                     }}
                 >
-                    Unresolved
+                    {t("unresolved")}
                 </button>
 
                 <button
@@ -520,11 +574,11 @@ export default function ShoppingListDetailPage() {
                         color: "white"
                     }}
                 >
-                    Resolved
+                    {t("resolved")}
                 </button>
             </div>
 
-            <ul style={{ listStyle: "none", padding: 0 }}>
+            <ul style={{listStyle: "none", padding: 0}}>
                 {filteredItems.map((item) => (
                     <li
                         key={item.id}
@@ -547,7 +601,7 @@ export default function ShoppingListDetailPage() {
                         </span>
 
                         {isMember && (
-                            <div style={{ display: "flex", gap: "0.5rem" }}>
+                            <div style={{display: "flex", gap: "0.5rem"}}>
                                 <button
                                     onClick={() => toggleResolved(item.id)}
                                     style={{
@@ -556,12 +610,12 @@ export default function ShoppingListDetailPage() {
                                         padding: "0.3rem 0.6rem"
                                     }}
                                 >
-                                    {item.isResolved ? "Undo" : "Resolve"}
+                                    {item.isResolved ? t("undo") : t("resolve")}
                                 </button>
 
                                 <button
                                     onClick={() =>
-                                        setConfirmAction({ type: "item", targetId: item.id })
+                                        setConfirmAction({type: "item", targetId: item.id})
                                     }
                                     style={{
                                         background: "#ef4444",
@@ -579,7 +633,7 @@ export default function ShoppingListDetailPage() {
 
             {/* Add item (only members) */}
             {isMember && (
-                <div style={{ marginTop: "1rem" }}>
+                <div style={{marginTop: "1rem"}}>
                     <input
                         value={newItemText}
                         onChange={(e) => setNewItemText(e.target.value)}
@@ -604,14 +658,14 @@ export default function ShoppingListDetailPage() {
                             padding: "0.4rem 0.8rem"
                         }}
                     >
-                        Add
+                        {t("add")}
                     </button>
                 </div>
             )}
 
             {isOwner && (
                 <button
-                    onClick={() => setConfirmAction({ type: "list" })}
+                    onClick={() => setConfirmAction({type: "list"})}
                     style={{
                         background: "#d14b4b",
                         padding: "0.4rem 0.8rem",
@@ -619,7 +673,8 @@ export default function ShoppingListDetailPage() {
                         marginTop: "2rem"
                     }}
                 >
-                    Delete list
+                    {t("deleteList")}
+
                 </button>
             )}
 

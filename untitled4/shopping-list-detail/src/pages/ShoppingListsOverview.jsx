@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -6,10 +7,21 @@ import {
     createShoppingList,
     deleteShoppingList
 } from "../services/api";
-
+import TopBar from "../components/TopBar";
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    Tooltip,
+    ResponsiveContainer
+} from "recharts";
+import { useTranslation } from "react-i18next";
 const CURRENT_USER_ID = "u1";
 
+
 export default function ShoppingListsOverview() {
+    const { t } = useTranslation();
     const [lists, setLists] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -18,6 +30,7 @@ export default function ShoppingListsOverview() {
     const [newListName, setNewListName] = useState("");
     const [confirmDeleteId, setConfirmDeleteId] = useState(null);
     const [showArchived, setShowArchived] = useState(false);
+
 
     // ✅ LOAD LISTS FROM BACKEND ONLY
     useEffect(() => {
@@ -131,18 +144,24 @@ export default function ShoppingListsOverview() {
     if (error) {
         return <div style={{ color: "white", padding: "2rem" }}>{error}</div>;
     }
+    const chartData = visibleLists.map(list => ({
+        name: list.name,
+        // Fake count for visualization (backend does not provide items here)
+        items: Math.floor(Math.random() * 8) + 1
+    }));
+
 
     return (
+
         <div
             style={{
                 padding: "2rem",
-                color: "white",
-                background: "#0b1220",
                 minHeight: "100vh",
                 fontFamily: "Arial, sans-serif"
             }}
         >
-            <h1 style={{ marginBottom: "1rem" }}>My Shopping Lists</h1>
+            <TopBar/>
+            <h1 style={{marginBottom: "1rem"}}>{t("myLists")}</h1>
 
             {/* Toolbar */}
             <div
@@ -161,22 +180,35 @@ export default function ShoppingListsOverview() {
                     }}
                     onClick={() => setShowAddModal(true)}
                 >
-                    + New List
+                     {t("newList")}
                 </button>
 
-                <label style={{ color: "#cbd5e1" }}>
+                <label style={{color: "#cbd5e1"}}>
                     <input
                         type="checkbox"
                         checked={showArchived}
                         onChange={(e) => setShowArchived(e.target.checked)}
-                        style={{ marginRight: "0.4rem" }}
+                        style={{marginRight: "0.4rem"}}
                     />
-                    Show archived
+                     {t("showArchived")}
                 </label>
             </div>
 
+            <h2>{t("overview")}</h2>
+
+            <div style={{width: "100%", height: 300, marginBottom: "2rem"}}>
+                <ResponsiveContainer>
+                    <BarChart data={chartData}>
+                        <XAxis dataKey="name"/>
+                        <YAxis allowDecimals={false}/>
+                        <Tooltip/>
+                        <Bar dataKey="items" fill="#38bdf8"/>
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
+
             {/* LIST CARDS */}
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <div style={{display: "flex", gap: "1rem", flexWrap: "wrap"}}>
                 {visibleLists.map(list => {
                     const isOwner = list.ownerId === CURRENT_USER_ID;
 
@@ -201,11 +233,11 @@ export default function ShoppingListsOverview() {
                                     color: "white"
                                 }}
                             >
-                                <h3 style={{ marginTop: 0 }}>{list.name}</h3>
+                                <h3 style={{marginTop: 0}}>{list.name}</h3>
                             </Link>
 
-                            <p style={{ color: "#94a3b8", margin: "0.3rem 0 1rem" }}>
-                                {(list.memberIds || []).length} members
+                            <p style={{color: "#94a3b8", margin: "0.3rem 0 1rem"}}>
+                                {t("membersCount", { count: (list.memberIds || []).length })}
                             </p>
 
                             {isOwner && (
@@ -217,7 +249,7 @@ export default function ShoppingListsOverview() {
                                         padding: "0.4rem 1rem",
                                     }}
                                 >
-                                    {list.isArchived ? "Restore" : "Archive"}
+                                    {list.isArchived ? t("restore") : t("archive")}
                                 </button>
                             )}
 
@@ -243,7 +275,7 @@ export default function ShoppingListsOverview() {
                 })}
 
                 {visibleLists.length === 0 && (
-                    <p style={{ color: "#94a3b8" }}>No lists found.</p>
+                    <p style={{color: "#94a3b8"}}>No lists found.</p>
                 )}
             </div>
 
@@ -270,12 +302,12 @@ export default function ShoppingListsOverview() {
                             color: "white"
                         }}
                     >
-                        <h2 style={{ marginTop: 0 }}>Create List</h2>
+                        <h2 style={{marginTop: 0}}>{t("createList")}</h2>
 
                         <input
                             value={newListName}
                             onChange={(e) => setNewListName(e.target.value)}
-                            placeholder="List name..."
+                            placeholder={t("listNamePlaceholder")}
                             style={{
                                 width: "100%",
                                 padding: "0.5rem",
@@ -287,7 +319,7 @@ export default function ShoppingListsOverview() {
                             }}
                         />
 
-                        <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+                        <div style={{display: "flex", justifyContent: "flex-end", gap: "10px"}}>
                             <button
                                 onClick={() => setShowAddModal(false)}
                                 style={{
@@ -299,7 +331,8 @@ export default function ShoppingListsOverview() {
                                     cursor: "pointer"
                                 }}
                             >
-                                Cancel
+                                {t("cancel")}
+
                             </button>
 
                             <button
@@ -313,7 +346,7 @@ export default function ShoppingListsOverview() {
                                     cursor: "pointer"
                                 }}
                             >
-                                Add
+                                {t("add")}
                             </button>
                         </div>
                     </div>
@@ -343,8 +376,8 @@ export default function ShoppingListsOverview() {
                             border: "1px solid #1f2a44"
                         }}
                     >
-                        <h3 style={{ marginTop: 0 }}>Confirm Delete</h3>
-                        <p>Are you sure?</p>
+                        <h3 style={{marginTop: 0}}>{t("confirmDelete")}</h3>
+                        <p>{t("areYouSure")}</p>
 
                         <div
                             style={{
@@ -379,7 +412,7 @@ export default function ShoppingListsOverview() {
                                     cursor: "pointer"
                                 }}
                             >
-                                Delete
+                                {t("delete")}
                             </button>
                         </div>
                     </div>

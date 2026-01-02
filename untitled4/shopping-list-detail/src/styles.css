@@ -62,3 +62,12 @@ button:active {
     transform: scale(0.97);
     filter: brightness(0.9);
 }
+.dark {
+    background: #0b1220;
+    color: white;
+}
+
+.light {
+    background: #f8fafc;
+    color: #0f172a;
+}
